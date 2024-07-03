@@ -1,6 +1,7 @@
 package com.sparta.delivery_app.domain.openApi.dto;
 
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.sparta.delivery_app.domain.menu.entity.Menu;
 import lombok.Getter;
 

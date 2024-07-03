@@ -5,6 +5,8 @@ import com.sparta.delivery_app.common.globalcustomexception.MenuNotFoundExceptio
 import com.sparta.delivery_app.domain.menu.entity.Menu;
 import com.sparta.delivery_app.domain.menu.entity.MenuStatus;
 import com.sparta.delivery_app.domain.menu.repository.MenuRepository;
+import com.sparta.delivery_app.domain.store.entity.Store;
+import com.sparta.delivery_app.domain.store.entity.StoreStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,6 +68,10 @@ public class MenuAdapter {
 
     public void deleteTempMenu(Menu menu) {
         menuRepository.delete(menu);
+    }
+
+    public Page<Menu> queryMenu(Pageable pageable) {
+        return menuRepository.findAllByMenuStatus(pageable, StoreStatus.ENABLE);
     }
 
 }

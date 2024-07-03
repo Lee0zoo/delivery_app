@@ -2,6 +2,7 @@ package com.sparta.delivery_app.domain.user.adapter;
 
 import com.sparta.delivery_app.common.globalcustomexception.UserDuplicatedException;
 import com.sparta.delivery_app.common.globalcustomexception.UserNotExistException;
+import com.sparta.delivery_app.domain.menuLiked.repository.MenuLikedRepository;
 import com.sparta.delivery_app.domain.user.entity.User;
 import com.sparta.delivery_app.domain.user.entity.UserStatus;
 import com.sparta.delivery_app.domain.user.repository.UserRepository;

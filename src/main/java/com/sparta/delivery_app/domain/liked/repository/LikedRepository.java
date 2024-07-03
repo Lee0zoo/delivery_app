@@ -9,6 +9,5 @@ import java.util.Optional;
 
 public interface LikedRepository extends JpaRepository<Liked, Long> {
     boolean existsByStoreAndUser(Store store, User user);
-
     Optional<Liked> findByStoreId(Long storeId);
 }

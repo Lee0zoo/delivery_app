@@ -3,6 +3,11 @@ package com.sparta.delivery_app.domain.user.service;
 import com.sparta.delivery_app.common.exception.errorcode.UserErrorCode;
 import com.sparta.delivery_app.common.globalcustomexception.UserPasswordMismatchException;
 import com.sparta.delivery_app.common.security.AuthenticationUser;
+import com.sparta.delivery_app.domain.commen.page.util.PageUtil;
+import com.sparta.delivery_app.domain.menu.adapter.MenuAdapter;
+import com.sparta.delivery_app.domain.menu.entity.Menu;
+import com.sparta.delivery_app.domain.menuLiked.adapter.MenuLikedAdapter;
+import com.sparta.delivery_app.domain.store.entity.Store;
 import com.sparta.delivery_app.domain.user.adapter.PasswordHistoryAdapter;
 import com.sparta.delivery_app.domain.user.adapter.UserAdapter;
 import com.sparta.delivery_app.domain.user.dto.request.*;
@@ -13,6 +18,8 @@ import com.sparta.delivery_app.domain.user.entity.PasswordHistory;
 import com.sparta.delivery_app.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +35,7 @@ public class UserService {
     private final UserAdapter userAdapter;
     private final PasswordHistoryAdapter passwordHistoryAdapter;
     private final PasswordEncoder passwordEncoder;
+    private final MenuLikedAdapter menuLikedAdapter;
 
     /**
      * consumers 회원가입
@@ -93,7 +101,8 @@ public class UserService {
      * @return 회원가입 정보 email, name, address
      */
     @Transactional
-    public UserProfileModifyResponseDto modifyProfileUser(AuthenticationUser user,final  UserProfileModifyRequestDto requestDto) {
+    public UserProfileModifyResponseDto modifyProfileUser(
+            AuthenticationUser user,final  UserProfileModifyRequestDto requestDto) {
         User findUser = userAdapter.queryUserByEmailAndStatus(user.getUsername());
         PasswordHistory passwordHistory = passwordHistoryAdapter.queryPasswordHistoryTop1ByUser(findUser);
 
@@ -102,8 +111,10 @@ public class UserService {
             throw new UserPasswordMismatchException(UserErrorCode.PASSWORD_NOT_MATCH);
         }
 
+        int totalMyMenu = menuLikedAdapter.queryMyMenu(findUser);
+
         User updateUser = findUser.updateUser(requestDto);
-        return UserProfileModifyResponseDto.of(updateUser);
+        return UserProfileModifyResponseDto.of(updateUser, totalMyMenu);
     }
 
     /**

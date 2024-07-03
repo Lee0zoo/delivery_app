@@ -2,6 +2,7 @@ package com.sparta.delivery_app.domain.user.entity;
 
 import com.sparta.delivery_app.domain.commen.BaseTimeEntity;
 import com.sparta.delivery_app.domain.liked.entity.Liked;
+import com.sparta.delivery_app.domain.menuLiked.entity.MenuLiked;
 import com.sparta.delivery_app.domain.review.entity.ManagerReviews;
 import com.sparta.delivery_app.domain.review.entity.UserReviews;
 import com.sparta.delivery_app.domain.user.dto.request.ConsumersSignupRequestDto;
@@ -40,6 +41,9 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user")
     private List<Liked> likedList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<MenuLiked> menuLikedList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<UserReviews> userReviewList = new ArrayList<>();

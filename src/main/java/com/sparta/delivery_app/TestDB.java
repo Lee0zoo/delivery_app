@@ -3,6 +3,7 @@ package com.sparta.delivery_app;
 import com.sparta.delivery_app.domain.liked.entity.Liked;
 import com.sparta.delivery_app.domain.menu.entity.Menu;
 import com.sparta.delivery_app.domain.menu.entity.MenuStatus;
+import com.sparta.delivery_app.domain.menuLiked.entity.MenuLiked;
 import com.sparta.delivery_app.domain.order.entity.Order;
 import com.sparta.delivery_app.domain.order.entity.OrderItem;
 import com.sparta.delivery_app.domain.order.entity.OrderStatus;
@@ -451,6 +452,12 @@ public class TestDB {
                     .store(store1)
                     .build();
             save(liked2);
+
+            MenuLiked liked3 = MenuLiked.builder()
+                    .user(consumer)
+                    .menu(menu1)
+                    .build();
+            save(liked3);
 
             /**
              *
