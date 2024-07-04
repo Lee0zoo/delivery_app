@@ -27,7 +27,9 @@ public class MenuLikedAdapter {
      * @return
      */
     public boolean existsByMenuAndUser(Menu findMenu, User findUser) {
-        if(menuLikedRepository.existsByMenu(findMenu) && menuLikedRepository.existsByUser(findUser)) {
+        List<Long> menuLikedId = menuLikedRepository.existsByUser(findUser);
+
+        if(menuLikedId.contains(findMenu.getId())) {
             return true;
         }
 

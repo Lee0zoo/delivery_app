@@ -17,9 +17,7 @@ public interface MenuLikedRepositoryCustom {
 
     void deleteMenuLiked(MenuLiked liked);
 
-    boolean existsByMenu(Menu findMenu);
-
-    boolean existsByUser(User findUser);
+    List<Long> existsByUser(User findUser);
 
     Optional<MenuLiked> findByMenuIdAndUser(Long menuId, User user);
 

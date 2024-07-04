@@ -2,7 +2,6 @@ package com.sparta.delivery_app.domain.menuLiked.repository;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.sparta.delivery_app.domain.menu.entity.Menu;
 import com.sparta.delivery_app.domain.menuLiked.entity.MenuLiked;
 import com.sparta.delivery_app.domain.openApi.dto.MenuListReadResponseDto;
 import com.sparta.delivery_app.domain.user.entity.User;
@@ -38,21 +37,12 @@ public class MenuLikedRepositoryImpl implements MenuLikedRepositoryCustom {
     }
 
     @Override
-    public boolean existsByMenu(Menu findMenu) {
-        return queryFactory
-                .from(menuLiked)
-                .where(menu.id.eq(findMenu.getId()))
-                .select(menu.id)
-                .fetchFirst() != null;
-    }
-
-    @Override
-    public boolean existsByUser(User findUser) {
+    public List<Long> existsByUser(User findUser) {
         return queryFactory
                 .from(menuLiked)
                 .where(user.id.eq(findUser.getId()))
-                .select(user.id)
-                .fetchFirst() != null;
+                .select(menu.id)
+                .fetch();
     }
 
     @Override
@@ -94,7 +84,7 @@ public class MenuLikedRepositoryImpl implements MenuLikedRepositoryCustom {
         return queryFactory.select(menuLiked.menu.menuName)
                 .from(menuLiked)
                 .groupBy(menuLiked.menu)
-                .orderBy(menuLiked.count().desc())
+                .orderBy(menuLiked.menu.menuName.count().desc())
                 .limit(10)
                 .fetch();
     }
